@@ -6,22 +6,32 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className) {
   var returnArr = [];
-  var docBod = document.body;
+  
   var getElements = function(element, className) {
     var childClasses = element.classList;
+    var temp;
+    
     for (var key in childClasses) {
       if (childClasses[key] === className) {
-        returnArr.push(element);
+        temp = element;
       }
     }
+    
+    if (temp !== undefined) { 
+      returnArr.push(temp); 
+    }
+    
     if (element.hasChildNodes()) {
       var children = element.childNodes;
-      children.forEach(function(elem) {
-        getElements(elem, className);
-      });
+      
+      for (var i = 0; i < children.length; i++) {
+        getElements(children[i], className);
+      }
     }
+    
   };
-  getElements(docBod, className);
+  
+  getElements(document.body, className);
+  
   return returnArr;
 };
-
